@@ -1,0 +1,17 @@
+.container {
+  margin-top: 25px;
+  width: 250px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.title {
+  position: relative;
+  top: -40px;
+  display: inline-block;
+  background-color: white;
+}
+
+.content {
+    margin-top: -60px;
+}
