@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 interface DateSelectorProps {
   title: string;
-  onDateChange: (date: Date) => void;
+  onDateChange: any;
 }
 
 const DateSelector: React.FC<DateSelectorProps> = ({ title, onDateChange }) => {

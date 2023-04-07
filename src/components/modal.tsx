@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import '../style/modal.css'
+import React, { useState, useEffect } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -22,8 +21,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
     }
   };
 
-  // Sets the modal style to show or hide the modal based on the isOpen prop
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       setModalStyle({ display: 'block' });
       document.body.style.overflow = 'hidden'; // Prevents scrolling in the background
@@ -36,12 +34,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   }, [isOpen]);
 
   return (
-    <div className="modal" style={modalStyle} onClick={handleOverlayClick}>
-      <div className="modal-content">
-        {children}
-        <button className="close-button" onClick={onClose}>
-          Close
-        </button>
+    <div className="modal-overlay" style={modalStyle} onClick={handleOverlayClick}>
+      <div className="modal-container">
+        <div className="modal-header">
+          <span onClick={onClose} className="modal-close-button">X</span>
+        </div>
+        <div className="modal-content">
+          {children}
+        </div>
       </div>
     </div>
   );

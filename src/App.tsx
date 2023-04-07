@@ -7,17 +7,23 @@ import {
 
 import ErrorScreen from './pages/errorScreen'
 import CreationScreen from './pages/creationScreen'
+import EmployeesScreen from './pages/employeesScreen';
+import store from './redux/store';
+import { Provider } from 'react-redux';
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<CreationScreen />} />
-          <Route path='/*' element={<ErrorScreen />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<CreationScreen />} />
+            <Route path='/employees' element={<EmployeesScreen />} />
+            <Route path='/*' element={<ErrorScreen />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </Provider>
   )
 }
 

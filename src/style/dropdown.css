@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: lightgrey;
+    background-color: rgb(244, 244, 244);
     padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 3px;
+    border: 1px solid lightgray;
 }
