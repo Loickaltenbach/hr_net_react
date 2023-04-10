@@ -11,17 +11,16 @@ const DateSelector: React.FC<DateSelectorProps> = ({ title, onDateChange }) => {
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
     setSelectedDate(date);
-    onDateChange(date);
+    onDateChange(formatDate(date));
   };
 
+  // Format the date to YYYY-MM-DD as serializable
   const formatDate = (date: Date | null) => {
-    if (!date) {
-      return "";
-    }
+    if (!date) return "";
     const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, "0");
-    const day = `${date.getDate()}`.padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
   };
 
   return (

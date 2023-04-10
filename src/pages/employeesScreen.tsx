@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 
 const EmployeesScreen = () => {
   const employees = useSelector(
-    (state: RootState) => state.employees.employees
+    (state: RootState) => state.employees.employees || []
   );
   const [filteredEmployees, setFilteredEmployees] =
     useState<Employee[]>(employees);
@@ -18,7 +18,7 @@ const EmployeesScreen = () => {
     setFilterText(searchValue);
     setFilteredEmployees(
       employees.filter((employee) =>
-        `${employee.firstName} ${employee.lastName}`
+        `${employee.firstName} ${employee.lastName} ${employee.department} ${employee.state} ${employee.city} ${employee.street} ${employee.zip} ${employee.birthDate} ${employee.startDate}`
           .toLowerCase()
           .includes(searchValue.toLowerCase())
       )
@@ -47,8 +47,17 @@ const EmployeesScreen = () => {
     pageNumbers.push(i);
   }
 
+  //date formatter from string to mm/dd/yyyy
+  const dateFormatter = (date: string) => {
+    const dateObj = new Date(date);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const year = dateObj.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   return (
-    <div>
+    <div style={{ width: 1000 }}>
       <Header title="Current Employees" />
       <div
         style={{
@@ -77,39 +86,46 @@ const EmployeesScreen = () => {
       <table style={{ borderCollapse: "collapse", width: "100%" }}>
         <thead>
           <tr>
-            <th style={{ border: "1px solid black", padding: "5px" }}>
-              First Name
-            </th>
-            <th style={{ border: "1px solid black", padding: "5px" }}>
-              Last Name
-            </th>
-            <th style={{ border: "1px solid black", padding: "5px" }}>
-              Date of Birth
-            </th>
-            <th style={{ border: "1px solid black", padding: "5px" }}>
-              Start Date
-            </th>
-            <th style={{ border: "1px solid black", padding: "5px" }}>
-              Street
-            </th>
-            <th style={{ border: "1px solid black", padding: "5px" }}>City</th>
-            <th style={{ border: "1px solid black", padding: "5px" }}>State</th>
-            <th style={{ border: "1px solid black", padding: "5px" }}>
-              Zip Code
-            </th>
-            <th style={{ border: "1px solid black", padding: "5px" }}>
-              Department
-            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>First Name</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>Last Name</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>Start Date</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>Department</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>Date of Birth</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>Street</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>City</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>State</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>Zip Code</th>
           </tr>
         </thead>
-        <tbody>
-          {filteredEmployees.map((employee) => (
-            <tr key={employee.id}>
-              <td>{employee.firstName}</td>
-              <td>{employee.lastName}</td>
-              <td>{employee.birthDate}</td>
-              <td>{employee.startDate}</td>
-              <td>{employee.department}</td>
+        <tbody
+          style={{
+            borderBottom: "1px solid black",
+            borderTop: "1px solid black",
+          }}
+        >
+          {filteredEmployees.map((employee, index) => (
+            <tr
+              key={employee.id}
+              style={{
+                backgroundColor: index % 2 === 0 ? "lightgray" : "white",
+                height: 35,
+                borderBottom: index === indexOfLastItem ? "black" : "1px solid lightgray",
+                padding: "5px",
+              }}
+            >
+              <td style={{padding: 10}}>{employee.firstName || ""}</td>
+              <td style={{padding: 10}}>{employee.lastName || ""}</td>
+              <td style={{padding: 10}}>
+                {employee.startDate ? dateFormatter(employee.startDate) : ""}
+              </td>
+              <td style={{padding: 10}}>{employee.department}</td>
+              <td style={{padding: 10}}>
+                {employee.birthDate ? dateFormatter(employee.birthDate) : ""}
+              </td>
+              <td style={{padding: 10}}>{employee.street || ""}</td>
+              <td style={{padding: 10}}>{employee.city || ""}</td>
+              <td style={{padding: 10}}>{employee.state}</td>
+              <td style={{padding: 10}}>{employee.zip || ""}</td>
             </tr>
           ))}
         </tbody>
@@ -125,20 +141,28 @@ const EmployeesScreen = () => {
           Showing {indexOfFirstItem + 1} to {indexOfLastItem} of{" "}
           {employees.length} entries
         </div>
-        <div className="pagination" style={{display: 'flex', justifyContent: 'space-between', alignItems: "center", width: 150}}>
-          <button
-            onClick={() => handlePageChange(activePage - 1)}
-            disabled={activePage === 1}
+        <div
+          className="pagination"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: 150,
+          }}
+        >
+          <p
+            style={{cursor: activePage === 1 ? "not-allowed" : "pointer"}}
+            onClick={() => activePage !== 1 && handlePageChange(activePage - 1)}
           >
             Previous
-          </button>
-          <p style={{height: 20}}>{activePage}</p>
-          <button
-            onClick={() => handlePageChange(activePage + 1)}
-            disabled={activePage === pageNumbers.length}
+          </p>
+          <button style={{ height: 40, width: 40, border: '1px solid lightgray' }}>{activePage}</button>
+          <p
+            style={{cursor: activePage === pageNumbers.length ? "not-allowed" : "pointer"}}
+            onClick={() => activePage !== pageNumbers.length && handlePageChange(activePage + 1)}
           >
             Next
-          </button>
+          </p>
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>

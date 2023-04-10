@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/dropdown.css";
 import arrow from "../assets/arrow.svg";
 
@@ -22,6 +22,10 @@ const Dropdown: React.FC<DropdownProps> = ({
 }) => {
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log('', items);
+  }, [items]);
 
   const handleItemClick = (item: MenuItem) => {
     setSelectedItem(item);

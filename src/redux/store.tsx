@@ -1,6 +1,7 @@
-import { combineReducers, createStore } from "redux";
+import { combineReducers } from "redux";
 import employeesReducer from "./reducer";
 import { Employee } from "../redux/types";
+import { configureStore } from "@reduxjs/toolkit";
 
 // Define the EmployeesState interface
 export interface EmployeesState {
@@ -18,6 +19,8 @@ export interface RootState {
 }
 
 // Create the store
-const store = createStore(rootReducer);
+const store = configureStore({
+  reducer: rootReducer,
+});
 
 export default store;

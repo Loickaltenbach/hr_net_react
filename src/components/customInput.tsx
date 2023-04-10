@@ -3,10 +3,11 @@ import React from 'react';
 interface Props {
   title: string;
   value: string;
+  type?: string;
   onChangeValue: (text: string) => void;
 }
 
-const CustomInput: React.FC<Props> = ({ title, value, onChangeValue }) => {
+const CustomInput: React.FC<Props> = ({ title, value, onChangeValue, type }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeValue(event.target.value);
   };
@@ -14,7 +15,7 @@ const CustomInput: React.FC<Props> = ({ title, value, onChangeValue }) => {
   return (
     <div>
       <p>{title}</p>
-      <input type="text" value={value} onChange={handleInputChange} />
+      <input type={type} value={value} onChange={handleInputChange} />
     </div>
   );
 };

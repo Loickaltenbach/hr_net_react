@@ -1,3 +1,7 @@
+.dropdown-toggle:hover {
+    background-color: rgb(226, 226, 226);
+}
+
 .dropdown-toggle {
     display: flex;
     flex-direction: row;
@@ -8,4 +12,24 @@
     padding-right: 15px;
     border-radius: 3px;
     border: 1px solid lightgray;
+    width: 200px;
 }
+
+.dropdown-menu {
+    position: absolute;
+    background-color: white;
+    border: 1px solid lightgray;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 230px;
+  }
+  
+  .dropdown-menu p {
+    padding: 10px;
+  }
+  
+  .dropdown-menu p:hover {
+    background-color: blue;
+    color: white;
+  }

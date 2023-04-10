@@ -10,33 +10,36 @@ import Header from "../components/header";
 import { addEmployee } from "../redux/action";
 import { Employee } from "../redux/types";
 import Modal from "../components/modal";
+import { useDispatch } from "react-redux";
 
 const CreationScreen = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  //create an id generator
+  const idGenerator = (): number => {
+    return Math.floor(Math.random() * 1000000);
+  };
+
+  //create a new employee object with setters
   const [employee, setEmployee] = useState<Employee>({
-    id: 0,
+    id: idGenerator(),
     firstName: "",
     lastName: "",
     birthDate: "",
     startDate: "",
     street: "",
     city: "",
-    state: "",
+    state: states[0].value,
     zip: "",
-    department: "",
+    department: departments[0].value,
   });
 
-  const handleInputChange =
-    (field: keyof Employee) =>
-    (value: string): void => {
-      setEmployee((prevState: any) => ({
-        ...prevState,
-        [field]: value,
-      }));
-    };
+  const handleInputChange = (key: string) => (value: string): void => {
+    setEmployee({ ...employee, [key]: value });
+  };
 
   const handleSaveClick = (): void => {
-    addEmployee(employee);
+    dispatch(addEmployee(employee));
     setOpenModal(true);
   };
 
@@ -60,8 +63,7 @@ const CreationScreen = () => {
       </div>
       <Modal isOpen={openModal} onClose={handleCloseModal}>
         <div>
-          <h4>Employee saved successfully!</h4>
-          <button onClick={handleCloseModal}>Close</button>
+          <p>Employee created!</p>
         </div>
       </Modal>
       <CustomInput
@@ -103,6 +105,7 @@ const CreationScreen = () => {
               items={states}
             />
             <CustomInput
+              type="number"
               title="Zip Code"
               value={employee.zip}
               onChangeValue={handleInputChange("zip")}

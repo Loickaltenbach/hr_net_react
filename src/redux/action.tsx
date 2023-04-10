@@ -10,7 +10,8 @@ interface AddEmployeeAction {
 
 export type EmployeeActionTypes = AddEmployeeAction;
 
-export function addEmployee(employee: Employee): AddEmployeeAction {
+//create a function to update the store when a new employee is added
+export function addEmployee(employee: Employee): EmployeeActionTypes {
   return {
     type: ADD_EMPLOYEE,
     payload: employee,
