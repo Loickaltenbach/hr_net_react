@@ -11,21 +11,24 @@ type DropdownProps = {
   title: string;
   items: MenuItem[];
   defaultLabel: string;
-  onSelect: any;
+  selectedItem: MenuItem | null;
+  setSelectedItem: (item: MenuItem) => void;
+  onSelect: (item: MenuItem) => void;
 };
 
 const Dropdown: React.FC<DropdownProps> = ({
   title,
   items,
   defaultLabel,
+  selectedItem,
+  setSelectedItem,
   onSelect,
 }) => {
-  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     console.log('', items);
-  }, [items]);
+  }, []);
 
   const handleItemClick = (item: MenuItem) => {
     setSelectedItem(item);

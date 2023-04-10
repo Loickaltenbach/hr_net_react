@@ -12,6 +12,11 @@ import { Employee } from "../redux/types";
 import Modal from "../components/modal";
 import { useDispatch } from "react-redux";
 
+type MenuItem = {
+  label: string;
+  value: string;
+};
+
 const CreationScreen = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -34,10 +39,22 @@ const CreationScreen = () => {
     department: departments[0].value,
   });
 
-  const handleInputChange = (key: string) => (value: string): void => {
+  const [selectedState, setSelectedState] = useState<MenuItem | null>(null);
+  const [selectedDepartment, setSelectedDepartment] = useState<MenuItem | null>(null);
+
+  const handleInputChange = (key: string, value: string): void => {
+    if(!key) return;
     setEmployee({ ...employee, [key]: value });
   };
 
+  const handleDateChange = (key: string) => (value: string): void => {
+    setEmployee({ ...employee, [key]: value });
+  };
+
+  const handleDropdownChange = (key: string, item: MenuItem) => {
+    if(!key) return;
+    setEmployee({ ...employee, [key]: item.value });
+  }
   const handleSaveClick = (): void => {
     dispatch(addEmployee(employee));
     setOpenModal(true);
@@ -69,20 +86,20 @@ const CreationScreen = () => {
       <CustomInput
         title="First Name"
         value={employee.firstName}
-        onChangeValue={handleInputChange("firstName")}
+        onChangeValue={(firstName) => handleInputChange("firstName", firstName)}
       />
       <CustomInput
         title="Last Name"
         value={employee.lastName}
-        onChangeValue={handleInputChange("lastName")}
+        onChangeValue={(lastName) => handleInputChange("lastName", lastName)}
       />
       <DateSelector
         title="Date of Birth"
-        onDateChange={handleInputChange("birthDate")}
+        onDateChange={handleDateChange("birthDate")}
       />
       <DateSelector
         title="Start Date"
-        onDateChange={handleInputChange("startDate")}
+        onDateChange={handleDateChange("startDate")}
       />
       <Container
         title="Address"
@@ -91,16 +108,18 @@ const CreationScreen = () => {
             <CustomInput
               title="Street"
               value={employee.street}
-              onChangeValue={handleInputChange("street")}
+              onChangeValue={(street) => handleInputChange("street", street)}
             />
             <CustomInput
               title="City"
               value={employee.city}
-              onChangeValue={handleInputChange("city")}
+              onChangeValue={(city) => handleInputChange("city", city)}
             />
             <Dropdown
               title="State"
-              onSelect={handleInputChange("state")}
+              selectedItem={selectedState}
+              setSelectedItem={setSelectedState}
+              onSelect={(item: MenuItem) => handleDropdownChange("state", item)}
               defaultLabel={states[0].label}
               items={states}
             />
@@ -108,14 +127,16 @@ const CreationScreen = () => {
               type="number"
               title="Zip Code"
               value={employee.zip}
-              onChangeValue={handleInputChange("zip")}
+              onChangeValue={(zip) => handleInputChange("zip", zip)}
             />
           </div>
         }
       />
       <Dropdown
         title="Department"
-        onSelect={handleInputChange("department")}
+        selectedItem={selectedDepartment}
+        setSelectedItem={setSelectedDepartment}
+        onSelect={(item: MenuItem) => handleDropdownChange("department", item)}
         defaultLabel={departments[0].label}
         items={departments}
       />

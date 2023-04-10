@@ -15,7 +15,7 @@ const CustomInput: React.FC<Props> = ({ title, value, onChangeValue, type }) => 
   return (
     <div>
       <p>{title}</p>
-      <input type={type} value={value} onChange={handleInputChange} />
+      <input type={type??'text'} value={value} onChange={handleInputChange} />
     </div>
   );
 };
