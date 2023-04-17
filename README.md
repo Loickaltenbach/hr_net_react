@@ -12,8 +12,8 @@
 - [![React-v_18.2.0](https://img.shields.io/badge/React-v_18.2.0-blue)](https://fr.reactjs.org/)
 - [![React-Router-v_6.10.0](https://img.shields.io/badge/React_Router-v_6.10.0-yellow)](https://reactrouter.com/en/main)
 - [![Redux-Thunk-v_2.4.2](https://img.shields.io/badge/Redux_Thunk-v_2.4.2-red)](https://github.com/reduxjs/redux-thunk)
-- [[![Redux-v_4.2.1](https://img.shields.io/badge/Redux-v_4.2.1-pink)](https://redux.js.org/)
-- [[![Vite-v_4.2.0](https://img.shields.io/badge/Vite-v_4.2.0-green)](https://vitejs.dev/)]]]
+- [![Redux-v_4.2.1](https://img.shields.io/badge/Redux-v_4.2.1-pink)](https://redux.js.org/)
+- [![Vite-v_4.2.0](https://img.shields.io/badge/Vite-v_4.2.0-green)](https://vitejs.dev/)]]]
 
 ## Environments
 
