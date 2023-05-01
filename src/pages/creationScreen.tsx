@@ -75,7 +75,7 @@ const CreationScreen = () => {
           alignItems: "center",
         }}
       >
-        <NavLink to={"employees"}>View current employees</NavLink>
+        <NavLink style={{color: 'blue'}} to={"employees"}>View current employees</NavLink>
         <h3>Create Employee</h3>
       </div>
       <Modal isOpen={openModal} onClose={handleCloseModal}>

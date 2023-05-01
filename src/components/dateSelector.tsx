@@ -27,6 +27,8 @@ const DateSelector: React.FC<DateSelectorProps> = ({ title, onDateChange }) => {
     <div>
       <p>{title}</p>
       <input
+        id="date"
+        aria-label="Date"
         type="date"
         value={formatDate(selectedDate)}
         onChange={handleDateChange}

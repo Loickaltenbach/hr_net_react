@@ -43,7 +43,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       <p>{title}</p>
       <div className="dropdown-toggle" onClick={toggleOpen}>
         {selectedItem ? selectedItem.label : defaultLabel}
-        <img src={arrow} />
+        <img height={20} width={20} alt="arrow" src={arrow} />
       </div>
       {isOpen && (
         <ul className="dropdown-menu">

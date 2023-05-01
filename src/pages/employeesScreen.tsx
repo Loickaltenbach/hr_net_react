@@ -4,6 +4,7 @@ import { RootState } from "../redux/store";
 import { Employee } from "../redux/types";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import Sorting from "../components/sorting";
 
 const EmployeesScreen = () => {
   const employees = useSelector(
@@ -24,6 +25,35 @@ const EmployeesScreen = () => {
       )
     );
   };
+
+  const handleSorting = (sortBy: string, order: string) => {
+    const sortedEmployees = [...filteredEmployees as any];
+
+    if (order === "asc") {
+      sortedEmployees.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) {
+          return -1;
+        }
+        if (a[sortBy] > b[sortBy]) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      sortedEmployees.sort((a, b) => {
+        if (a[sortBy] > b[sortBy]) {
+          return -1;
+        }
+        if (a[sortBy] < b[sortBy]) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+  
+    setFilteredEmployees(sortedEmployees);
+  };
+  
 
   const [activePage, setActivePage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -79,22 +109,40 @@ const EmployeesScreen = () => {
         <div style={{ marginLeft: "20px", marginRight: "10px" }}>
           <span>
             Search:{" "}
-            <input type="text" value={filterText} onChange={handleSearch} />
+            <input id="search" aria-label="Search" type="text" value={filterText} onChange={handleSearch} />
           </span>
         </div>
       </div>
       <table style={{ borderCollapse: "collapse", width: "100%" }}>
         <thead>
           <tr>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>First Name</th>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>Last Name</th>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>Start Date</th>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>Department</th>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>Date of Birth</th>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>Street</th>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>City</th>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>State</th>
-            <th style={{ padding: "5px", fontWeight: "bold" }}>Zip Code</th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="firstName" handleSorting={handleSorting} />
+            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="lastName" handleSorting={handleSorting} />
+            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="startDate" handleSorting={handleSorting} />
+            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="department" handleSorting={handleSorting} />
+            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="birthDate" handleSorting={handleSorting} />
+            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="street" handleSorting={handleSorting} />
+            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="city" handleSorting={handleSorting} />
+            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="state" handleSorting={handleSorting} />
+            </th>
+            <th style={{ padding: "5px", fontWeight: "bold" }}>
+              <Sorting sortBy="zipCode" handleSorting={handleSorting} />
+            </th>
           </tr>
         </thead>
         <tbody
@@ -109,23 +157,24 @@ const EmployeesScreen = () => {
               style={{
                 backgroundColor: index % 2 === 0 ? "lightgray" : "white",
                 height: 35,
-                borderBottom: index === indexOfLastItem ? "black" : "1px solid lightgray",
+                borderBottom:
+                  index === indexOfLastItem ? "black" : "1px solid lightgray",
                 padding: "5px",
               }}
             >
-              <td style={{padding: 10}}>{employee.firstName || ""}</td>
-              <td style={{padding: 10}}>{employee.lastName || ""}</td>
-              <td style={{padding: 10}}>
+              <td style={{ padding: 10 }}>{employee.firstName || ""}</td>
+              <td style={{ padding: 10 }}>{employee.lastName || ""}</td>
+              <td style={{ padding: 10 }}>
                 {employee.startDate ? dateFormatter(employee.startDate) : ""}
               </td>
-              <td style={{padding: 10}}>{employee.department}</td>
-              <td style={{padding: 10}}>
+              <td style={{ padding: 10 }}>{employee.department}</td>
+              <td style={{ padding: 10 }}>
                 {employee.birthDate ? dateFormatter(employee.birthDate) : ""}
               </td>
-              <td style={{padding: 10}}>{employee.street || ""}</td>
-              <td style={{padding: 10}}>{employee.city || ""}</td>
-              <td style={{padding: 10}}>{employee.state}</td>
-              <td style={{padding: 10}}>{employee.zip || ""}</td>
+              <td style={{ padding: 10 }}>{employee.street || ""}</td>
+              <td style={{ padding: 10 }}>{employee.city || ""}</td>
+              <td style={{ padding: 10 }}>{employee.state}</td>
+              <td style={{ padding: 10 }}>{employee.zip || ""}</td>
             </tr>
           ))}
         </tbody>
@@ -151,15 +200,25 @@ const EmployeesScreen = () => {
           }}
         >
           <p
-            style={{cursor: activePage === 1 ? "not-allowed" : "pointer"}}
+            style={{ cursor: activePage === 1 ? "not-allowed" : "pointer" }}
             onClick={() => activePage !== 1 && handlePageChange(activePage - 1)}
           >
             Previous
           </p>
-          <button style={{ height: 40, width: 40, border: '1px solid lightgray' }}>{activePage}</button>
+          <button
+            style={{ height: 40, width: 40, border: "1px solid lightgray" }}
+          >
+            {activePage}
+          </button>
           <p
-            style={{cursor: activePage === pageNumbers.length ? "not-allowed" : "pointer"}}
-            onClick={() => activePage !== pageNumbers.length && handlePageChange(activePage + 1)}
+            style={{
+              cursor:
+                activePage === pageNumbers.length ? "not-allowed" : "pointer",
+            }}
+            onClick={() =>
+              activePage !== pageNumbers.length &&
+              handlePageChange(activePage + 1)
+            }
           >
             Next
           </p>
