@@ -27,7 +27,7 @@ const CreationScreen = () => {
 
   //create a new employee object with setters
   const [employee, setEmployee] = useState<Employee>({
-    id: idGenerator(),
+    id: idGenerator().toString(),
     firstName: "",
     lastName: "",
     birthDate: "",
@@ -84,20 +84,24 @@ const CreationScreen = () => {
         </div>
       </Modal>
       <CustomInput
+        id={"firstName"}
         title="First Name"
         value={employee.firstName}
         onChangeValue={(firstName) => handleInputChange("firstName", firstName)}
       />
       <CustomInput
+        id={"lastName"}
         title="Last Name"
         value={employee.lastName}
         onChangeValue={(lastName) => handleInputChange("lastName", lastName)}
       />
       <DateSelector
+        id={"birthDate"}
         title="Date of Birth"
         onDateChange={handleDateChange("birthDate")}
       />
       <DateSelector
+        id={"startDate"}
         title="Start Date"
         onDateChange={handleDateChange("startDate")}
       />
@@ -106,11 +110,13 @@ const CreationScreen = () => {
         children={
           <div>
             <CustomInput
+              id={"street"}
               title="Street"
               value={employee.street}
               onChangeValue={(street) => handleInputChange("street", street)}
             />
             <CustomInput
+              id={"city"}
               title="City"
               value={employee.city}
               onChangeValue={(city) => handleInputChange("city", city)}
@@ -124,6 +130,7 @@ const CreationScreen = () => {
               items={states}
             />
             <CustomInput
+              id={"zip"}
               type="number"
               title="Zip Code"
               value={employee.zip}

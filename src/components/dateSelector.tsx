@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 interface DateSelectorProps {
+  id: string;
   title: string;
   onDateChange: any;
 }
 
-const DateSelector: React.FC<DateSelectorProps> = ({ title, onDateChange }) => {
+const DateSelector: React.FC<DateSelectorProps> = ({ id, title, onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +28,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({ title, onDateChange }) => {
     <div>
       <p>{title}</p>
       <input
-        id="date"
+        id={id}
         aria-label="Date"
         type="date"
         value={formatDate(selectedDate)}
