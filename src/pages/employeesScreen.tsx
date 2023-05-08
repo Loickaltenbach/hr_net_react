@@ -87,7 +87,7 @@ const EmployeesScreen = () => {
   };
 
   return (
-    <div style={{ width: 1000 }}>
+    <div style={{ width: 850 }}>
       <Header title="Current Employees" />
       <div
         style={{
